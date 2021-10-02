@@ -28,19 +28,20 @@ I have implemented Provider in this app.
 <div align="left">
     <pre>Create a new branch for your modifications (git checkout -b branch-name)</pre>
 </div>
- 4.
+4. Now make your changes
+5.
 <div align="left">
     <pre>Add your files (git add .)</pre>
 </div>
-5.
+6.
 <div align="left">
     <pre>commit (git commit -m "message")</pre>
 </div>
-6
+7.
 <div align="left">
     <pre>push (git push origin branch-name)</pre>
 </div>
-7.
+8.
 <div align="left">
     <pre>Create a pull request with label</pre>
 </div>
