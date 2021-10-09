@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:bmicalculator/core/notifiers/bmi_calculate.notifiers.dart';
+import 'package:bmicalculator/meta/views/hint_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -34,93 +36,129 @@ class _HomeViewState extends State<HomeView> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(25.0),
-            child: Center(
-              child: SizedBox(
-                height: 350,
-                width: double.infinity,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextField(
-                          controller: heightController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Enter Height",
-                            border: OutlineInputBorder(),
-                            labelText: "Height",
-                            suffixText: 'Meters',
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        TextField(
-                          controller: weightController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Enter Weight",
-                            border: OutlineInputBorder(),
-                            labelText: "Weight",
-                            suffixText: 'Kg',
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        SizedBox(
-                          height: 45,
-                          width: 200,
-                          child: ElevatedButton(
-                              onPressed: () async {
-                                if (heightController.text.isEmpty &&
-                                    weightController.text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "Enter you correct height and weight")));
-                                }
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    displayModalHint(context);
+                  },
+                  icon: Icon(
+                    Icons.help,
+                    color: Colors.blue,
+                    size: 24,
+                  ),
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 350,
+                    width: double.infinity,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextField(
+                              controller: heightController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp("[0-9.]"))
+                              ],
+                              decoration: InputDecoration(
+                                hintText: "Enter Height",
+                                border: OutlineInputBorder(),
+                                labelText: "Height",
+                                suffixText: 'Meters',
+                              ),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            TextField(
+                              controller: weightController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp("[0-9.]"))
+                              ],
+                              decoration: InputDecoration(
+                                hintText: "Enter Weight",
+                                border: OutlineInputBorder(),
+                                labelText: "Weight",
+                                suffixText: 'Kg',
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            SizedBox(
+                              height: 45,
+                              width: 200,
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (heightController.text.isEmpty ||
+                                        weightController.text.isEmpty ||
+                                        heightController.text == '.' ||
+                                        heightController.text == '..' ||
+                                        weightController.text == '.' ||
+                                        weightController.text == '..' ||
+                                        heightController.text.contains("..") ||
+                                        weightController.text.contains("..")) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Enter you correct height and weight")));
+                                    } else {
+                                      var height =
+                                          double.parse(heightController.text);
+                                      var weight =
+                                          double.parse(weightController.text);
+                                      var bmiValue = await bmiNotifier
+                                          .bmiCalculate(height, weight);
+                                      var healthStatus;
+                                      setState(() {
+                                        bmiValue = double.parse(
+                                            (bmiValue).toStringAsFixed(2));
+                                        if (bmiValue <= 18.5) {
+                                          healthStatus =
+                                              'Oops! You are underweight.';
+                                        }
+                                        if (18.5 <= bmiValue &&
+                                            bmiValue <= 24.9) {
+                                          healthStatus =
+                                              'Awesome! You are healthy.';
+                                        }
+                                        if (25 <= bmiValue &&
+                                            bmiValue <= 29.9) {
+                                          healthStatus =
+                                              'Eee!You are over weight.';
+                                        }
+                                        if (30 <= bmiValue) {
+                                          healthStatus =
+                                              'Seesh! You are obese.';
+                                        }
+                                      });
 
-                                var height =
-                                    double.parse(heightController.text);
-                                var weight =
-                                    double.parse(weightController.text);
-                                var bmiValue = await bmiNotifier.bmiCalculate(
-                                    height, weight);
-                                var healthStatus;
-                                setState(() {
-                                  bmiValue = double.parse(
-                                      (bmiValue).toStringAsFixed(2));
-                                  if (bmiValue <= 18.5) {
-                                    healthStatus = 'Oops! You are underweight.';
-                                  }
-                                  if (18.5 <= bmiValue && bmiValue <= 24.9) {
-                                    healthStatus = 'Awesome! You are healthy.';
-                                  }
-                                  if (25 <= bmiValue && bmiValue <= 29.9) {
-                                    healthStatus = 'Eee!You are over weight.';
-                                  }
-                                  if (30 <= bmiValue) {
-                                    healthStatus = 'Seesh! You are obese.';
-                                  }
-                                });
-
-                                displayModalBottomSheet(
-                                    context, bmiValue.toString(), healthStatus);
-                              },
-                              child: Text("Calculate BMI")),
+                                      displayModalBottomSheet(context,
+                                          bmiValue.toString(), healthStatus);
+                                    }
+                                  },
+                                  child: Text("Calculate BMI")),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           )),
     );
@@ -171,5 +209,14 @@ void displayModalBottomSheet(context, String bmiValue, healthStatus) {
                     ],
                   ),
                 )));
+      });
+}
+
+void displayModalHint(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+            height: 300, color: Color(0xFF737373), child: HintPage());
       });
 }
