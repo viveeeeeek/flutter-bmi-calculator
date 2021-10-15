@@ -4,7 +4,7 @@ Simple Body Mass Index calculator app built in Flutter.
 This project will be good start for those who wants to start with Provider.
 I have implemented Provider in this app.
 
-![BMI CALCULATOR]( )
+
 <br>
 
 <b>Currently only available for Android<b/>
