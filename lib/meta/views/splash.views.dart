@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bmicalculator/app/app.routes.dart';
+import 'package:bmicalculator/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,21 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: primaryColor,
         body: Center(
-      child: AnimatedImage(),
-    ));
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              AnimatedImage(),
+              Text('BMI Calculator',
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ],
+          ),
+        ));
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:bmicalculator/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class HintPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class _HintPageState extends State<HintPage> {
     return Container(
       height: 300,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: primaryColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
@@ -64,12 +65,15 @@ class _HintPageState extends State<HintPage> {
           SizedBox(height: 16),
           Text(
             "How to Use",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: activeColor),
           ),
           SizedBox(height: 24),
           Text(
-            'Enter your height and weight\n\nFor example height: 1.65 and weight: 50, then click Calculate BMI Button and see your result in the Dialog',
-            textAlign: TextAlign.justify,
+            'Enter your height and weight\n\nFor example height: 1.65 and weight: 50, then click \'Calculate BMI\' Button and see your result in the Dialog',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
           )
         ],
       ),
@@ -77,21 +81,31 @@ class _HintPageState extends State<HintPage> {
   }
 
   Widget firstPage() {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          SizedBox(height: 16),
-          Text(
-            "BMI",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16),
-          Text(
-            'BMI is a measurement of a persons leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height. Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between.',
-            textAlign: TextAlign.justify,
-          )
-        ],
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: [
+            SizedBox(height: 16),
+            Text(
+              "BMI",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: activeColor),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'BMI is a measurement of a persons leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height. Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            )
+          ],
+        ),
       ),
     );
   }
