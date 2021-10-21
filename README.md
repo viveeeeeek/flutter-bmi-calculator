@@ -4,10 +4,6 @@ Simple Body Mass Index calculator app built in Flutter.
 This project will be good start for those who wants to start with Provider.
 I have implemented Provider in this app.
 
-## Test app
-
-<b>[armeabi-v7a](https://drive.google.com/file/d/1zd6l5Dk5hn6uSA7fOnND_Icu4zXnfL2h/view?usp=sharing)</b><br>
-<b>[arm64-v8a](https://drive.google.com/file/d/14OUY8bI0jwc2-K3mcokaTWMWjfFqC8ej/view?usp=sharing)</b>
 ![image](https://user-images.githubusercontent.com/64553247/138335483-d96c9acf-1eef-46da-a604-41b178540d8b.png)
 ![image](https://user-images.githubusercontent.com/64553247/138335562-ffecb9c6-3694-4ac8-b1c3-57450b62be3a.png)
 
