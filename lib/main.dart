@@ -1,5 +1,6 @@
 import 'package:bmicalculator/app/app.routes.dart';
 import 'package:bmicalculator/app/providers/app.providers.dart';
+import 'package:bmicalculator/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,9 @@ class Lava extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BMI Calculator',
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        primaryColor: primaryColor,
+      ),
       initialRoute: AppRoutes.SplashRoute,
       routes: AppRoutes.routes,
     );
