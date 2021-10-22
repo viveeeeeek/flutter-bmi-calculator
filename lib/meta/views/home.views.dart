@@ -4,6 +4,7 @@ import 'package:bmicalculator/core/notifiers/bmi_calculate.notifiers.dart';
 import 'package:bmicalculator/meta/views/hint_page.dart';
 import 'package:bmicalculator/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,9 @@ class _HomeViewState extends State<HomeView> {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: kIsWeb
+                    ? EdgeInsets.symmetric(horizontal: 50)
+                    : EdgeInsets.all(10),
                 child: IconButton(
                   onPressed: () {
                     displayModalHint(context);
@@ -64,85 +67,89 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  height: 350,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: secondaryColor,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: const [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Image.asset(
-                            "assets/girl.png",
-                            height: 100,
-                            width: 100,
+                Center(
+                  child: Container(
+                    height: kIsWeb ? 500 : 350,
+                    width: kIsWeb ? 450 : double.infinity,
+                    decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 4),
+                            blurRadius: 4,
                           ),
-                        ),
-                        TextField(
-                          controller: heightController,
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Color(0xFFEEEEEE)),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-                          ],
-                          decoration: InputDecoration(
-                            hintText: "Enter Height",
-                            hintStyle: TextStyle(color: Color(0xFFEEEEEE)),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: fieldColor, width: 5),
-                              borderRadius: BorderRadius.circular(10),
+                        ]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Image.asset(
+                              "assets/girl.png",
+                              height: kIsWeb ? 200 : 100,
+                              width: kIsWeb ? 200 : 100,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: fieldColor, width: 5),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            labelText: "Height",
-                            labelStyle: TextStyle(
-                                color: Color(0xFFEEEEEE), fontSize: 18),
-                            suffixText: 'Meters',
                           ),
-                        ),
-                        TextField(
-                          controller: weightController,
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(color: Color(0xFFEEEEEE)),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-                          ],
-                          decoration: InputDecoration(
-                            hintText: "Enter Weight",
-                            hintStyle: TextStyle(color: Color(0xFFEEEEEE)),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: fieldColor, width: 5),
-                              borderRadius: BorderRadius.circular(10),
+                          TextField(
+                            controller: heightController,
+                            keyboardType: TextInputType.number,
+                            style: TextStyle(color: Color(0xFFEEEEEE)),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp("[0-9.]"))
+                            ],
+                            decoration: InputDecoration(
+                              hintText: "Enter Height",
+                              hintStyle: TextStyle(color: Color(0xFFEEEEEE)),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: fieldColor, width: 5),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: fieldColor, width: 5),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: "Height",
+                              labelStyle: TextStyle(
+                                  color: Color(0xFFEEEEEE), fontSize: 18),
+                              suffixText: 'Meters',
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: fieldColor, width: 5),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            labelText: "Weight",
-                            labelStyle: TextStyle(
-                                color: Color(0xFFEEEEEE), fontSize: 18),
-                            suffixText: 'Kg',
                           ),
-                        ),
-                      ],
+                          TextField(
+                            controller: weightController,
+                            keyboardType: TextInputType.number,
+                            style: TextStyle(color: Color(0xFFEEEEEE)),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp("[0-9.]"))
+                            ],
+                            decoration: InputDecoration(
+                              hintText: "Enter Weight",
+                              hintStyle: TextStyle(color: Color(0xFFEEEEEE)),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: fieldColor, width: 5),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: fieldColor, width: 5),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: "Weight",
+                              labelStyle: TextStyle(
+                                  color: Color(0xFFEEEEEE), fontSize: 18),
+                              suffixText: 'Kg',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -237,49 +244,44 @@ class _HomeViewState extends State<HomeView> {
 void displayModalBottomSheet(context, String bmiValue, healthStatus) {
   showModalBottomSheet(
       context: context,
+      backgroundColor: primaryColor,
       builder: (BuildContext bc) {
         return Container(
             height: 300,
-            color: Color(0xFF737373),
-            child: Container(
-                height: 250,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        height: 5,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                      ),
-                      SizedBox(height: 50),
-                      Text(
-                        "Your BMI is: $bmiValue",
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFEEEEEE)),
-                      ),
-                      SizedBox(height: 50),
-                      Text(
-                        healthStatus,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: activeColor),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Container(
+                      height: 5,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                    ),
+                    SizedBox(height: 50),
+                    Text(
+                      "Your BMI is: $bmiValue",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFEEEEEE)),
+                    ),
+                    SizedBox(height: 50),
+                    Text(
+                      healthStatus,
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: activeColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 )));
       });
 }
@@ -287,8 +289,9 @@ void displayModalBottomSheet(context, String bmiValue, healthStatus) {
 void displayModalHint(context) {
   showModalBottomSheet(
       context: context,
+      backgroundColor: primaryColor,
+
       builder: (BuildContext bc) {
-        return Container(
-            height: 300, color: Color(0xFF737373), child: HintPage());
+        return Container(height: 300, child: HintPage());
       });
 }
