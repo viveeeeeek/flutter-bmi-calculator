@@ -71,7 +71,10 @@ class _HintPageState extends State<HintPage> {
                     ),
                   ),
                 )
-              : SizedBox(),
+              : SizedBox(
+                  width: 0,
+                  height: 50,
+                ),
           indicatorPage()
         ],
       ),
@@ -95,24 +98,31 @@ class _HintPageState extends State<HintPage> {
   }
 
   Widget secondPage() {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          SizedBox(height: 16),
-          Text(
-            "How to Use",
-            style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: activeColor),
-          ),
-          SizedBox(height: 24),
-          Text(
-            'Enter your height and weight\n\nFor example height: 1.65 and weight: 50, then click \'Calculate BMI\' Button and see your result in the Dialog',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-          )
-        ],
+    return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: [
+            SizedBox(height: 16),
+            Text(
+              "How to Use",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: activeColor),
+            ),
+            SizedBox(height: 24),
+            Text(
+              'Enter your height and weight\n\nFor example height: 1.65 and weight: 50, then click \'Calculate BMI\' Button and see your result in the Dialog',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            )
+          ],
+        ),
       ),
     );
   }
