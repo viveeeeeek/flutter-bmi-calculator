@@ -1,4 +1,5 @@
 import 'package:bmicalculator/theme/theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HintPage extends StatefulWidget {
@@ -7,7 +8,10 @@ class HintPage extends StatefulWidget {
 }
 
 class _HintPageState extends State<HintPage> {
+  final PageController _controller = PageController(initialPage: 0);
   int selectedPage = 0;
+  bool _isPageChanged = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,11 +26,14 @@ class _HintPageState extends State<HintPage> {
       child: Column(
         children: [
           Container(
-            height: 250,
+            height: 200,
             child: PageView(
+              controller: _controller,
               onPageChanged: (index) {
                 setState(() {
                   selectedPage = index;
+                  if (index == 0) _isPageChanged = false;
+                  if (index == 1) _isPageChanged = true;
                 });
               },
               children: [
@@ -35,6 +42,36 @@ class _HintPageState extends State<HintPage> {
               ],
             ),
           ),
+          kIsWeb
+              ? InkWell(
+                  onTap: () {
+                    _isPageChanged
+                        ? _controller.previousPage(
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInCubic)
+                        : _controller.nextPage(
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInCubic);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      margin: EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                          color: activeColor,
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Icon(
+                        _isPageChanged
+                            ? Icons.arrow_back_ios_new
+                            : Icons.arrow_forward_ios,
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                )
+              : SizedBox(),
           indicatorPage()
         ],
       ),
