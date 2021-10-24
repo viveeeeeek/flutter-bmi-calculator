@@ -41,8 +41,8 @@ Home screen             |  Result screen
 </div>
   
 
-## Thank you.
+### Thank you.
 
-## LICENSE
+### LICENSE
 
 Licensed under the [MIT License](LICENSE).
