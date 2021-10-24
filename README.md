@@ -42,3 +42,7 @@ Home screen             |  Result screen
   
 
 ## Thank you.
+
+## LICENSE
+
+Licensed under the [MIT License](LICENSE).
