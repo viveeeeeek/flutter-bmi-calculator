@@ -6,7 +6,8 @@ I have implemented Provider in this app.
 
 Home screen             |  Result screen
 :-------------------------:|:-------------------------:
-![image](https://user-images.githubusercontent.com/64553247/138335483-d96c9acf-1eef-46da-a604-41b178540d8b.png)  |  ![image](https://user-images.githubusercontent.com/64553247/138335562-ffecb9c6-3694-4ac8-b1c3-57450b62be3a.png)
+![Mobile home screen](/.github/screenshot/mobile/phone_screenshot_home.jpg?raw=true "Mobile home screen")  |  ![Mobile result screen](/.github/screenshot/mobile/phone_screenshot_result.jpg?raw=true "Mobile result screen")
+![Web home screen](/.github/screenshot/web/web_screenshot_home.png?raw=true "Web home screen")  |  ![Web result screen](/.github/screenshot/web/web_screenshot_result.png?raw=true "Web result screen")
 
   
 <h2>Contribution Instructions</h2>
