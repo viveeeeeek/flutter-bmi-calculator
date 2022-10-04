@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import './bmi_gauge.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -150,14 +151,22 @@ class _HomeViewState extends State<HomeView> {
                               // suffixText: 'Kg',
                             ),
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               DropdownButton(
                                 items: const [
-                                  DropdownMenuItem(child: Text("Meters"), value: "mts",),
-                                  DropdownMenuItem(child: Text("CentiMeters"), value: "cm",),
+                                  DropdownMenuItem(
+                                    child: Text("Meters"),
+                                    value: "mts",
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text("Centimeters"),
+                                    value: "cm",
+                                  ),
                                 ],
                                 value: value1,
                                 onChanged: dropdownCallback,
@@ -180,14 +189,20 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               DropdownButton(
                                 items: const [
-                                  DropdownMenuItem(child: Text("Kg's"), value: "kg",),
-                                  DropdownMenuItem(child: Text("Grams"), value: "g",),
+                                  DropdownMenuItem(
+                                    child: Text("Kg"),
+                                    value: "kg",
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text("Grams"),
+                                    value: "g",
+                                  ),
                                 ],
                                 value: value2,
                                 onChanged: dropdownCallback2,
                                 iconSize: 40,
                                 hint: Text(
-                                  "kg or gm",
+                                  "Kg or gms",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -246,10 +261,11 @@ class _HomeViewState extends State<HomeView> {
                       } else {
                         var height = double.parse(heightController.text);
                         var weight = double.parse(weightController.text);
+                        print(weight);
                         var heightUnits = value1;
                         var weightUnits = value2;
-                        var bmiValue =
-                            await bmiNotifier.bmiCalculate(height, weight, heightUnits, weightUnits);
+                        var bmiValue = await bmiNotifier.bmiCalculate(
+                            height, weight, heightUnits, weightUnits);
                         var healthStatus;
                         setState(() {
                           bmiValue =
@@ -303,7 +319,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void dropdownCallback(String? selectedValue) {
-    if(selectedValue is String){
+    if (selectedValue is String) {
       setState(() {
         value1 = selectedValue;
       });
@@ -311,7 +327,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void dropdownCallback2(String? selectedValue) {
-    if(selectedValue is String){
+    if (selectedValue is String) {
       setState(() {
         value2 = selectedValue;
       });
@@ -321,11 +337,15 @@ class _HomeViewState extends State<HomeView> {
 
 void displayModalBottomSheet(context, String bmiValue, healthStatus) {
   showModalBottomSheet(
+      //isDismissible: true,
+
+      isScrollControlled: true,
+      elevation: 6,
       context: context,
       backgroundColor: primaryColor,
       builder: (BuildContext bc) {
-        return Container(
-            height: 300,
+        return Wrap(children: [
+          Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
@@ -334,7 +354,6 @@ void displayModalBottomSheet(context, String bmiValue, healthStatus) {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
                     Container(
                       height: 5,
                       width: 50,
@@ -342,7 +361,10 @@ void displayModalBottomSheet(context, String bmiValue, healthStatus) {
                           color: Colors.grey.withOpacity(0.5),
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(
+                      height: 40,
+                    ),
+
                     Text(
                       "Your BMI is: $bmiValue",
                       style: TextStyle(
@@ -350,17 +372,20 @@ void displayModalBottomSheet(context, String bmiValue, healthStatus) {
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEEEEEE)),
                     ),
-                    SizedBox(height: 50),
-                    Text(
-                      healthStatus,
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: activeColor),
-                      textAlign: TextAlign.center,
-                    ),
+                    ShowGauge(bmiValue, healthStatus),
+
+                    // Text(
+                    //   healthStatus,
+                    //   style: TextStyle(
+                    //       fontSize: 25,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: activeColor),
+                    //   textAlign: TextAlign.center,
+                    // ),
                   ],
-                )));
+                )),
+          ),
+        ]);
       });
 }
 
@@ -368,7 +393,6 @@ void displayModalHint(context) {
   showModalBottomSheet(
       context: context,
       backgroundColor: primaryColor,
-
       builder: (BuildContext bc) {
         return Container(height: 300, child: HintPage());
       });
