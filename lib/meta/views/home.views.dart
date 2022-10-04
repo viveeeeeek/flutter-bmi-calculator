@@ -14,6 +14,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  String? value1;
+  String? value2;
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
@@ -118,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
                               labelText: "Height",
                               labelStyle: TextStyle(
                                   color: Color(0xFFEEEEEE), fontSize: 18),
-                              suffixText: 'Meters',
+                              // suffixText: 'Meters',
                             ),
                           ),
                           TextField(
@@ -145,9 +147,63 @@ class _HomeViewState extends State<HomeView> {
                               labelText: "Weight",
                               labelStyle: TextStyle(
                                   color: Color(0xFFEEEEEE), fontSize: 18),
-                              suffixText: 'Kg',
+                              // suffixText: 'Kg',
                             ),
                           ),
+                          SizedBox(height: 5,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              DropdownButton(
+                                items: const [
+                                  DropdownMenuItem(child: Text("Meters"), value: "mts",),
+                                  DropdownMenuItem(child: Text("CentiMeters"), value: "cm",),
+                                ],
+                                value: value1,
+                                onChanged: dropdownCallback,
+                                iconSize: 40,
+                                hint: Text(
+                                  "m or cm",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                isDense: true,
+                                underline: Container(
+                                  height: 3,
+                                  color: fieldColor,
+                                ),
+                                iconEnabledColor: fieldColor,
+                                dropdownColor: primaryColor,
+                                focusColor: Colors.white,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              DropdownButton(
+                                items: const [
+                                  DropdownMenuItem(child: Text("Kg's"), value: "kg",),
+                                  DropdownMenuItem(child: Text("Grams"), value: "g",),
+                                ],
+                                value: value2,
+                                onChanged: dropdownCallback2,
+                                iconSize: 40,
+                                hint: Text(
+                                  "kg or gm",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                isDense: true,
+                                underline: Container(
+                                  height: 3,
+                                  color: fieldColor,
+                                ),
+                                iconEnabledColor: fieldColor,
+                                dropdownColor: primaryColor,
+                                focusColor: Colors.white,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -158,6 +214,8 @@ class _HomeViewState extends State<HomeView> {
                   width: 200,
                   child: InkWell(
                     onTap: () async {
+                      print(value1);
+                      print(value2);
                       if (heightController.text.isEmpty ||
                           weightController.text.isEmpty ||
                           heightController.text == '.' ||
@@ -165,7 +223,9 @@ class _HomeViewState extends State<HomeView> {
                           weightController.text == '.' ||
                           weightController.text == '..' ||
                           heightController.text.contains("..") ||
-                          weightController.text.contains("..")) {
+                          weightController.text.contains("..") ||
+                          value1 == null ||
+                          value2 == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
@@ -186,8 +246,10 @@ class _HomeViewState extends State<HomeView> {
                       } else {
                         var height = double.parse(heightController.text);
                         var weight = double.parse(weightController.text);
+                        var heightUnits = value1;
+                        var weightUnits = value2;
                         var bmiValue =
-                            await bmiNotifier.bmiCalculate(height, weight);
+                            await bmiNotifier.bmiCalculate(height, weight, heightUnits, weightUnits);
                         var healthStatus;
                         setState(() {
                           bmiValue =
@@ -238,6 +300,22 @@ class _HomeViewState extends State<HomeView> {
             ),
           )),
     );
+  }
+
+  void dropdownCallback(String? selectedValue) {
+    if(selectedValue is String){
+      setState(() {
+        value1 = selectedValue;
+      });
+    }
+  }
+
+  void dropdownCallback2(String? selectedValue) {
+    if(selectedValue is String){
+      setState(() {
+        value2 = selectedValue;
+      });
+    }
   }
 }
 
