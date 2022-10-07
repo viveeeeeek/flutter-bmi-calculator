@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bmicalculator/app/app.routes.dart';
 import 'package:bmicalculator/theme/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
