@@ -37,7 +37,7 @@ void main() {
       await tester.enterText(find.byKey(ValueKey("WEIGHT_FIELD")), '65');
 
       final heightDropdown = find.text('m or cm');
-      final weightDropdown = find.text('kg or gm');
+      final weightDropdown = find.text('Kg or gms');
 
       await tester.tap(heightDropdown);
       await tester.tap(weightDropdown);
