@@ -98,6 +98,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                           TextField(
+                            key: ValueKey("HEIGHT_FIELD"),
                             controller: heightController,
                             keyboardType: TextInputType.number,
                             style: TextStyle(color: Color(0xFFEEEEEE)),
@@ -125,6 +126,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                           TextField(
+                            key: ValueKey("WEIGHT_FIELD"),
                             controller: weightController,
                             keyboardType: TextInputType.number,
                             style: TextStyle(color: Color(0xFFEEEEEE)),
@@ -346,6 +348,7 @@ void displayModalBottomSheet(context, String bmiValue, healthStatus) {
       builder: (BuildContext bc) {
         return Wrap(children: [
           Container(
+            key: ValueKey("BMI_RESPONSE"),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),

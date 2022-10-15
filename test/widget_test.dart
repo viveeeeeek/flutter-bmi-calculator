@@ -1,30 +1,54 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:bmicalculator/core/notifiers/bmi_calculate.notifiers.dart';
+import 'package:bmicalculator/meta/views/home.views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:bmicalculator/main.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(Core());
+  group('BMI Calculation', () {
+    testWidgets('Error message empty fields', (WidgetTester tester) async {
+      await tester.pumpWidget(MultiProvider(providers: [
+        ListenableProvider<BmiNotifier>(create: (_) => BmiNotifier())
+      ], child: MaterialApp(home: HomeView())));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      expect(find.text('Height'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      expect(find.text('Weight'), findsOneWidget);
+
+      await tester.tap(find.text("Calculate BMI"));
+
+      await tester.pump(Duration(microseconds: 100));
+
+      expect(find.byWidgetPredicate(((widget) => widget is SnackBar)),
+          findsOneWidget);
+    });
+
+    testWidgets('Insert data and get BMI', (WidgetTester tester) async {
+      await tester.pumpWidget(MultiProvider(providers: [
+        ListenableProvider<BmiNotifier>(create: (_) => BmiNotifier())
+      ], child: MaterialApp(home: HomeView())));
+
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byKey(ValueKey("HEIGHT_FIELD")), '1.65');
+
+      await tester.enterText(find.byKey(ValueKey("WEIGHT_FIELD")), '65');
+
+      final heightDropdown = find.text('m or cm');
+      final weightDropdown = find.text('Kg or gms');
+
+      await tester.tap(heightDropdown);
+      await tester.tap(weightDropdown);
+
+      await tester.tap(find.text("Calculate BMI"));
+
+      await tester.pump(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      expect(find.byWidgetPredicate(((widget) => widget is SnackBar)),
+          findsNothing);
+    });
   });
 }
