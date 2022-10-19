@@ -99,7 +99,7 @@ class _HintPageState extends State<HintPage> {
 
   Widget secondPage() {
     return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.all(15),
         child: Column(
